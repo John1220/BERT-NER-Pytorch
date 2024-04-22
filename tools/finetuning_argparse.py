@@ -3,15 +3,15 @@ import argparse
 def get_argparse():
     parser = argparse.ArgumentParser()
     # Required parameters
-    parser.add_argument("--task_name", default=None, type=str, required=True,
+    parser.add_argument("--task_name", default='cner', type=str, required=False,
                         help="The name of the task to train selected in the list: ")
-    parser.add_argument("--data_dir", default=None, type=str, required=True,
+    parser.add_argument("--data_dir", default='datasets/cner', type=str, required=False,
                         help="The input data dir. Should contain the training files for the CoNLL-2003 NER task.", )
-    parser.add_argument("--model_type", default=None, type=str, required=True,
+    parser.add_argument("--model_type", default='bert', type=str, required=False,
                         help="Model type selected in the list: ")
-    parser.add_argument("--model_name_or_path", default=None, type=str, required=True,
+    parser.add_argument("--model_name_or_path", default='/opt/data02/zhan/models/bert/albert_chinese_small', type=str, required=False,
                         help="Path to pre-trained model or shortcut name selected in the list: " )
-    parser.add_argument("--output_dir", default=None, type=str, required=True,
+    parser.add_argument("--output_dir", default='outputs/output', type=str, required=False,
                         help="The output directory where the model predictions and checkpoints will be written.", )
 
     # Other parameters
@@ -31,15 +31,15 @@ def get_argparse():
     parser.add_argument("--eval_max_seq_length", default=512, type=int,
                         help="The maximum total input sequence length after tokenization. Sequences longer "
                              "than this will be truncated, sequences shorter will be padded.", )
-    parser.add_argument("--do_train", action="store_true",
+    parser.add_argument("--do_train", action="store_true", default=True,
                         help="Whether to run training.")
-    parser.add_argument("--do_eval", action="store_true",
+    parser.add_argument("--do_eval", action="store_true", default=True,
                         help="Whether to run eval on the dev set.")
-    parser.add_argument("--do_predict", action="store_true",
+    parser.add_argument("--do_predict", action="store_true", default=True,
                         help="Whether to run predictions on the test set.")
     parser.add_argument("--evaluate_during_training", action="store_true",
                         help="Whether to run evaluation during training at each logging step.", )
-    parser.add_argument("--do_lower_case", action="store_true",
+    parser.add_argument("--do_lower_case", action="store_true", default=True,
                         help="Set this flag if you are using an uncased model.")
     # adversarial training
     parser.add_argument("--do_adv", action="store_true",
@@ -49,9 +49,9 @@ def get_argparse():
     parser.add_argument('--adv_name', default='word_embeddings', type=str,
                         help="name for adversarial layer.")
 
-    parser.add_argument("--per_gpu_train_batch_size", default=8, type=int,
+    parser.add_argument("--per_gpu_train_batch_size", default=24, type=int,
                         help="Batch size per GPU/CPU for training.")
-    parser.add_argument("--per_gpu_eval_batch_size", default=8, type=int,
+    parser.add_argument("--per_gpu_eval_batch_size", default=24, type=int,
                         help="Batch size per GPU/CPU for evaluation.")
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1,
                         help="Number of updates steps to accumulate before performing a backward/update pass.", )
@@ -65,7 +65,7 @@ def get_argparse():
                         help="Epsilon for Adam optimizer.")
     parser.add_argument("--max_grad_norm", default=1.0, type=float,
                         help="Max gradient norm.")
-    parser.add_argument("--num_train_epochs", default=3.0, type=float,
+    parser.add_argument("--num_train_epochs", default=5.0, type=float,
                         help="Total number of training epochs to perform.")
     parser.add_argument("--max_steps", default=-1, type=int,
                         help="If > 0: set total number of training steps to perform. Override num_train_epochs.", )
@@ -80,7 +80,7 @@ def get_argparse():
     parser.add_argument("--predict_checkpoints",type=int, default=0,
                         help="predict checkpoints starting with the same prefix as model_name ending and ending with step number")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
-    parser.add_argument("--overwrite_output_dir", action="store_true",
+    parser.add_argument("--overwrite_output_dir", action="store_true", default=True,
                         help="Overwrite the content of the output directory")
     parser.add_argument("--overwrite_cache", action="store_true",
                         help="Overwrite the cached training and evaluation sets")
